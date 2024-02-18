@@ -8,11 +8,11 @@ st.title("TalkGPT")
 hf_email = st.secrets['EMAIL']
 hf_pass = st.secrets['PASS']
 
-with st.chat_message("user"):
-    st.write("Hello. First message")
+# with st.chat_message("user"):
+#     st.write("Hello. First message")
 
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "How may I help you?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Hey, this is TalkGPT. Shoot your questions?"}]
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
