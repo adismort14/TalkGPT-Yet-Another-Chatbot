@@ -3,6 +3,8 @@ import time
 from hugchat import hugchat
 from hugchat.login import Login
 
+st.set_page_config(page_title="TalkGPT")
+
 st.title("TalkGPT")
 
 hf_email = st.secrets['EMAIL']
@@ -12,7 +14,7 @@ hf_pass = st.secrets['PASS']
 #     st.write("Hello. First message")
 
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "Hey, this is TalkGPT. Shoot your questions?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Hey, this is TalkGPT. Shoot your questions!"}]
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -22,6 +24,12 @@ def generate_response(prompt_input, email, passwd):
     sign = Login(email, passwd)
     cookies = sign.login()
     chatbot = hugchat.ChatBot(cookies=cookies.get_dict())
+    # print(chatbot.get_available_llm_models())
+    models=chatbot.get_available_llm_models()
+    for model in models:
+        print(model.name)
+    chatbot.switch_llm(5)
+    print(chatbot.get_active_llm_index())
     return chatbot.chat(prompt_input)
 
 def response_stream_generator(content):
